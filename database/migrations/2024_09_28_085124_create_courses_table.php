@@ -14,10 +14,11 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('slug')->unique();
             $table->decimal('hour_price');
             $table->integer('no_hours');
-            $table->enum('type', CourseTypeEnum::cases());
+            $table->enum('type', CourseTypeEnum::getValues());
             $table->timestamps();
 
             // foreigns

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enum\CourseTypeEnum;
+use App\Models\Teacher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,11 +18,14 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
+        $slug = fake()->slug();
         return [
-            'slug' => fake()->slug(),
-            'hour_price' => fake()->randomFloat(2, 100, 10000),
+            'name' => ucwords(str_replace('-', ' ', $slug)),
+            'slug' => $slug,
+            'hour_price' => fake()->randomFloat(2, 100, 500),
             'no_hours' => fake()->randomNumber(2),
-            'type' => fake()->randomElement(),
+            'type' => fake()->randomElement(CourseTypeEnum::getValues()),
+            'teacher_id' => Teacher::inRandomOrder()->first()->id,
         ];
     }
 }
