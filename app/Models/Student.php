@@ -12,4 +12,16 @@ class Student extends Model
     protected $hidden = [
         'password'
     ];
+
+    protected $with = ['locations', 'courses'];
+
+    function locations()
+    {
+        return $this->hasMany(StudentLocation::class);
+    }
+
+    function courses()
+    {
+        return $this->belongsToMany(Course::class, 'student_courses');
+    }
 }
